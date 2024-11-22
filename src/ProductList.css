@@ -25,7 +25,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 1100px;
+    width: 900px;
 }
 
 .navbar li {
@@ -59,6 +59,17 @@ body {
     justify-content: center;
 }
 
+.category {
+    border-top-color: black;
+    border-top-width: 0.1em;
+    border-bottom-color: black;
+    border-bottom-width: 0.1em;
+    border-left-color:transparent ;
+    border-right-color:transparent ;
+    border-style: solid;  
+    margin: 2em;
+    padding: 1em;
+}
 /* Product Card */
 .product-card {
     flex: 0 0 calc(33.33% - 20px); /* Adjust width for 3 cards per row with 20px gap */
@@ -108,8 +119,18 @@ body {
 }
 
 .product-button:hover {
-    background-color: #c0392b;
+    background-color: #c0392b;  
 }
+
+.product-button:disabled {
+    background-color: rgb(189, 187, 187);
+    cursor: not-allowed;  
+}
+
+.product-button:disabled:hover {
+    background-color: rgb(189, 187, 187); 
+}
+
 
 /* Pseudo-elements - Sale badge */
 .product-card::before {

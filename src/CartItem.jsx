@@ -1,35 +1,48 @@
-import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { removeItem, updateQuantity } from './CartSlice';
+import { removeItem, updateQuantity } from './CartSlice.js';
+import PropTypes from 'prop-types';
 import './CartItem.css';
 
-const CartItem = ({ onContinueShopping }) => {
-  const cart = useSelector(state => state.cart.items);
+const CartItem = ({onContinueShopping} ) => {
   const dispatch = useDispatch();
+
+  const cart = useSelector(state => state.cart.items);
+  console.log(cart, 'cart')
+  console.log(cart)
 
   // Calculate total amount for all products in the cart
   const calculateTotalAmount = () => {
+    if (cart.length !== 0) {
+      console.log(cart)
+      const total = cart.reduce((total, item) => total + item.quantity * item.cost.slice(1), 0)
+      
+      return total
+    } else {
+      return 0
+    }
+  };
+
  
+  const handleCheckoutShopping = () => {
+    alert('Functionality to be added for future reference');
   };
-
-  const handleContinueShopping = (e) => {
-   
-  };
-
-
 
   const handleIncrement = (item) => {
+    dispatch(updateQuantity({name:item.name, quantity:item.quantity + 1}))
   };
 
   const handleDecrement = (item) => {
-   
+    dispatch(updateQuantity({name:item.name, quantity:item.quantity - 1}))
   };
 
   const handleRemove = (item) => {
+    dispatch(removeItem(item.name))
   };
-
-  // Calculate total cost based on quantity for an item
+ 
   const calculateTotalCost = (item) => {
+    const total = item.cost.slice(1) * item.quantity
+    return total
+
   };
 
   return (
@@ -55,14 +68,17 @@ const CartItem = ({ onContinueShopping }) => {
       </div>
       <div style={{ marginTop: '20px', color: 'black' }} className='total_cart_amount'></div>
       <div className="continue_shopping_btn">
-        <button className="get-started-button" onClick={(e) => handleContinueShopping(e)}>Continue Shopping</button>
+        <button className="get-started-button" onClick={onContinueShopping}>Continue Shopping</button>
         <br />
-        <button className="get-started-button1">Checkout</button>
+        <button onClick={handleCheckoutShopping} className="get-started-button1">Checkout</button>
       </div>
     </div>
   );
 };
 
+CartItem.propTypes = {
+  onContinueShopping: PropTypes.func.isRequired,
+};
 export default CartItem;
 
 
